@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "postgis-ro": {
+      "command": "postgres-mcp",
+      "args": ["--access-mode=restricted"],
+      "env": {
+        "DATABASE_URI": "${POSTGIS_RO_URI}"
+      }
+    }
+  }
+}

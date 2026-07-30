@@ -1,0 +1,277 @@
+/* ============================================================================
+ * style-doc-tse.css — Charte graphique TSE pour la documentation GeoID
+ * ----------------------------------------------------------------------------
+ * Feuille de style generique des fiches d'outil generees par
+ * scripts/generer_doc_html.py. Aucune reference a un outil particulier :
+ * reutilisable pour tout workflow FME, script Python ou modele QGIS.
+ * Palette TSE : vert fonce #00373D, corail #F75041, peche #FFE6CD.
+ * ========================================================================== */
+
+/* -- Variables TSE -------------------------------------------------------- */
+:root {
+  --tse-vert-fonce:  #00373D;
+  --tse-vert:        #002D32;
+  --tse-canard:      #005F5A;
+  --tse-corail:      #F75041;
+  --tse-corail-chaud:#E8402F;
+  --tse-peche:       #FFE6CD;
+  --tse-blanc:       #FFFFFF;
+
+  --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+
+  --radius: 4px;
+  --toc-width: 260px;
+  --content-max: 860px;
+}
+
+/* -- Reset minimal -------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* -- Body & layout -------------------------------------------------------- */
+body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  color: #1a1a1a;
+  background: #f4f6f6;
+}
+
+.page-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* -- TOC (colonne gauche) ------------------------------------------------- */
+#toc {
+  width: var(--toc-width);
+  min-width: var(--toc-width);
+  background: var(--tse-vert-fonce);
+  color: var(--tse-blanc);
+  padding: 2rem 1.25rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+#toc h2 {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tse-peche);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+/* Masquer le titre genere par l'extension markdown (doublon) */
+#toc > .toc > .toctitle { display: none; }
+
+#toc ul {
+  list-style: none;
+  padding: 0;
+}
+
+#toc ul li { margin: 0; }
+
+#toc ul li a {
+  display: block;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.78);
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: background 0.15s, color 0.15s;
+  line-height: 1.4;
+}
+
+#toc ul li a:hover {
+  background: var(--tse-canard);
+  color: var(--tse-blanc);
+}
+
+/* Sous-niveaux */
+#toc ul ul { padding-left: 0.75rem; }
+#toc ul ul li a {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.55);
+}
+#toc ul ul li a:hover { color: var(--tse-blanc); }
+
+/* -- Contenu principal ---------------------------------------------------- */
+.content {
+  flex: 1;
+  padding: 3rem 2.5rem;
+  max-width: calc(var(--content-max) + 5rem);
+}
+
+.content-inner {
+  max-width: var(--content-max);
+}
+
+/* -- En-tete du document -------------------------------------------------- */
+.content-inner > h1:first-child {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--tse-vert-fonce);
+  padding-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 3px solid var(--tse-corail);
+}
+
+/* Meta (premier paragraphe) */
+.content-inner > p:first-of-type {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+/* -- Titres --------------------------------------------------------------- */
+h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--tse-vert-fonce);
+  margin: 2.5rem 0 0.8rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--tse-peche);
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--tse-canard);
+  margin: 1.6rem 0 0.5rem;
+}
+
+h4 {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #333;
+  margin: 1.2rem 0 0.4rem;
+}
+
+/* -- Paragraphes & listes ------------------------------------------------- */
+p { margin-bottom: 0.9rem; }
+
+ul, ol {
+  margin: 0.5rem 0 0.9rem 1.4rem;
+}
+
+li { margin-bottom: 0.2rem; }
+
+/* -- Liens ---------------------------------------------------------------- */
+a {
+  color: var(--tse-canard);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--tse-corail);
+  text-decoration: underline;
+}
+
+/* -- Tableaux ------------------------------------------------------------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.87rem;
+  margin: 1rem 0 1.5rem;
+  display: block;
+  overflow-x: auto;
+}
+
+thead tr {
+  background: var(--tse-vert-fonce);
+  color: var(--tse-blanc);
+}
+
+thead th {
+  padding: 0.6rem 0.9rem;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+tbody tr:nth-child(even) { background: #f0f5f5; }
+tbody tr:hover { background: #e6efef; }
+
+tbody td {
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid #dde8e8;
+  vertical-align: top;
+}
+
+/* -- Blockquotes (points d'attention) ------------------------------------- */
+blockquote {
+  background: var(--tse-peche);
+  border-left: 4px solid var(--tse-corail);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 0.8rem 1.1rem;
+  margin: 1rem 0 1.2rem;
+  font-size: 0.88rem;
+  color: #2a1a10;
+}
+
+blockquote p { margin-bottom: 0.3rem; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote strong { color: var(--tse-corail-chaud); }
+
+/* -- Code ----------------------------------------------------------------- */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.83em;
+  background: #eef2f2;
+  color: var(--tse-canard);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+
+pre {
+  background: var(--tse-vert);
+  color: #cde8e5;
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 0.8rem 0 1.2rem;
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* -- Separateur ----------------------------------------------------------- */
+hr {
+  border: none;
+  border-top: 1px solid #dde8e8;
+  margin: 2rem 0;
+}
+
+/* -- Responsive ----------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .page-wrapper { flex-direction: column; }
+
+  #toc {
+    width: 100%;
+    height: auto;
+    position: static;
+    padding: 1.2rem 1.5rem;
+  }
+
+  #toc ul ul { padding-left: 1rem; }
+
+  .content { padding: 2rem 1.5rem; }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 14px; }
+  .content { padding: 1.5rem 1rem; }
+  .content-inner > h1:first-child { font-size: 1.4rem; }
+  h2 { font-size: 1.1rem; }
+}
