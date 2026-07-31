@@ -2,7 +2,7 @@
 
 Ce fichier est la couche 1 de la bibliothèque d'agents : tout ce qui est vrai
 **quel que soit le projet**. Il est complété par le `CLAUDE.md` de chaque
-projet (couche 2), généré via la commande `/cadrer-projet`.
+projet (couche 2), généré via la commande `/geoid:cadrer-projet`.
 En cas de contradiction, la CHARTE prime, sauf dérogation explicitement
 actée dans le journal des décisions du projet.
 

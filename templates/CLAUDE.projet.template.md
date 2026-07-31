@@ -3,7 +3,7 @@
      Couche 2 : spécificités projet. La CHARTE.md (couche 1, règles
      transverses GéoID) s'applique intégralement et prime en cas de
      contradiction non actée au journal.
-     Généré le {{DATE}} via /cadrer-projet.
+     Généré le {{DATE}} via /geoid:cadrer-projet.
      ════════════════════════════════════════════════════════════════ -->
 
 # {{NOM_PROJET}}
@@ -99,7 +99,7 @@ test ou une maquette qui n'en dépend pas peut avancer.
 
 ## 10. Suivi du projet
 Roadmap / backlog, registre des risques et historique des revues :
-**`docs/suivi-projet.md`** (mis à jour via `/cloturer-session`). Ils ne
+**`docs/suivi-projet.md`** (mis à jour via `/geoid:cloturer-session`). Ils ne
 vivent pas ici pour garder ce fichier court — il est lu à chaque session.
 
 ## 11. Journal des décisions

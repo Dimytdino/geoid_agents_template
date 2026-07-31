@@ -4,8 +4,9 @@ Ce guide explique comment créer et démarrer un projet à partir du template
 `geoid_agents_template`. Du poste vide au premier livrable. Garde-le ouvert
 à côté de toi la première fois.
 
-> En une ligne : **template → `claude` (le plugin `geoid` s'installe seul) →
-> `/cadrer-projet` → trancher les ADR → produire → revue avant de livrer.**
+> En une ligne : **template → installer le plugin `geoid` (une fois par
+> poste) → `claude` → `/geoid:cadrer-projet` → trancher les ADR → produire →
+> revue avant de livrer.**
 
 ---
 
@@ -49,27 +50,53 @@ cd <mon-projet>
 
 ---
 
-## Étape 2 — Lancer Claude Code et cadrer le projet
+## Étape 2 — Installer le plugin d'équipe `geoid`
 
+Le plugin (agents, skills, commandes, hooks) est **déclaré** dans le
+`.claude/settings.json` du dépôt : celui-ci enregistre la marketplace
+`geoid-socle` et **active** `geoid`. Mais activer n'est pas installer : il
+faut une installation, à faire **une seule fois par poste** (elle vaut
+ensuite pour tous tes projets).
+
+```bash
+claude plugin install geoid@geoid-socle --scope user
+claude plugin list      # attendu : geoid@geoid-socle, scope user, ✔ enabled
+```
+
+Puis lancer Claude Code dans le dossier du projet :
 ```bash
 claude
 ```
-Au premier lancement dans le dossier, accepter de faire confiance au dépôt.
+Au premier lancement dans le dossier, accepter de faire confiance au dépôt —
+c'est cette réponse qui active le `.claude/settings.json` du projet.
 
-Le plugin d'équipe `geoid` (agents, skills, commandes) est **déjà déclaré**
-dans `.claude/settings.json` : il **s'installe automatiquement au démarrage**,
-sans aucune commande à taper (et se met à jour tout seul). Au besoin, vérifier
-avec `/plugin` que `geoid` est actif.
+> **Une installation de plugin ne prend effet qu'au démarrage suivant.** Si
+> tu avais déjà une session ouverte, quitte-la et relance `claude`.
 
-> Cela fonctionne sur toutes les surfaces (terminal, appli desktop, WSL,
-> sessions cloud). L'installation manuelle par `/plugin marketplace add` +
-> `/plugin install` reste possible là où la commande `/plugin` est disponible,
-> mais elle n'est plus nécessaire.
+**Si les commandes `/geoid:…` ou les agents n'apparaissent pas**, c'est
+presque toujours l'installation, pas la déclaration. `claude plugin list`
+affiche **une ligne par scope** (`user`, `project`, `local`) et un plugin peut
+y figurer *enabled* sans rien charger dans ce projet :
 
-Puis lancer le cadrage :
+| Ce que montre `claude plugin list` | Correctif |
+|---|---|
+| aucune ligne `geoid@geoid-socle` | `claude plugin install geoid@geoid-socle --scope user` |
+| version plus ancienne que celle du socle | `claude plugin update geoid@geoid-socle` |
+| une seule copie, en scope `local`, rattachée à un autre dépôt | installer au scope `user` (ci-dessus) ; la copie `local` est inoffensive, elle peut rester |
+
+Et dans tous les cas : **relancer `claude`**.
+
+---
+
+## Étape 3 — Cadrer le projet
+
 ```
-/cadrer-projet
+/geoid:cadrer-projet
 ```
+
+> Les commandes du plugin sont **préfixées** par son nom : `/cadrer-projet`
+> tout court ne résout pas. Dans le menu `/`, taper `cadrer` suffit à la
+> retrouver.
 
 L'entretien guidé couvre, par petits groupes de questions :
 - **identité** (nom, famille, commanditaire) ;
@@ -98,7 +125,7 @@ spécialisation ne sont chargés qu'au démarrage d'une session.
 
 ---
 
-## Étape 3 — Faire trancher les décisions ouvertes (ADR)
+## Étape 4 — Faire trancher les décisions ouvertes (ADR)
 
 Tant qu'un point est marqué `🔧 À ARBITRER` dans le `CLAUDE.md`, les
 tâches qui **dépendent de cette décision** sont bloquées — le reste
@@ -110,7 +137,7 @@ Utilise le sous-agent architecte pour instruire ADR-001 et ADR-002.
 
 ---
 
-## Étape 4 — Produire
+## Étape 5 — Produire
 
 Délègue le travail substantiel aux agents. Les actions sensibles
 (base de données, `git push`, réseau) demanderont ta confirmation ; les
@@ -121,7 +148,7 @@ Implémente [la tâche], conformément aux ADR actés.
 
 ---
 
-## Étape 5 — Comprendre en route (réflexe à prendre)
+## Étape 6 — Comprendre en route (réflexe à prendre)
 
 Dès qu'une notion n'est pas claire, le mentor est là — il explique sur le
 code réel du projet, et ne fait jamais à ta place. Personne ne juge.
@@ -132,7 +159,7 @@ ce concept] — je débute sur [sujet].
 
 ---
 
-## Étape 6 — Revue, puis livraison
+## Étape 7 — Revue, puis livraison
 
 Tout livrable **final** passe par le revieweur, puis par toi. Les
 corrections retournent à l'agent qui a produit, jamais au revieweur.
@@ -147,11 +174,11 @@ git push                           # demande confirmation
 
 ---
 
-## Étape 7 — Clôturer la session
+## Étape 8 — Clôturer la session
 
 En fin de séance utile, mettre à jour le suivi du projet :
 ```
-/cloturer-session
+/geoid:cloturer-session
 ```
 Le chef de projet (ou l'orchestrateur) met à jour la roadmap et les
 risques (`docs/suivi-projet.md`) et le journal des décisions
@@ -164,12 +191,15 @@ chaque micro-session.
 
 Le socle se met à jour par **deux canaux** :
 
-- **Agents, skills et commandes** (plugin `geoid`) — par la marketplace,
-  **automatiquement** (`autoUpdate` déclaré dans `.claude/settings.json`).
-  Rien à faire ; au besoin, forcer avec :
+- **Agents, skills, commandes et hooks** (plugin `geoid`) — par la
+  marketplace. L'`autoUpdate` déclaré dans `.claude/settings.json` rafraîchit
+  la **marketplace** ; ça ne suffit pas toujours à faire avancer la copie
+  installée du plugin. Le réflexe fiable :
+  ```bash
+  claude plugin list                        # quelle version tourne réellement ?
+  claude plugin update geoid@geoid-socle    # si elle est en retard
   ```
-  /plugin marketplace update geoid-socle
-  ```
+  puis relancer `claude`.
 - **CHARTE, permissions, gabarits, spécialisations** (template résiduel) —
   par merge git depuis le **dépôt template**, une fois par projet ajouter la
   source :
@@ -189,8 +219,10 @@ Le socle se met à jour par **deux canaux** :
 
 | Commande | Quand |
 |----------|-------|
-| `geoid:cadrer-projet` | au démarrage d'un projet |
-| `geoid:cloturer-session` | en fin de séance utile |
+| `/geoid:cadrer-projet` | au démarrage d'un projet |
+| `/geoid:cloturer-session` | en fin de séance utile |
+| `claude plugin list` | vérifier version et scope du plugin `geoid` |
+| `claude plugin update geoid@geoid-socle` | rattraper une version en retard (puis relancer `claude`) |
 
 ## Les règles d'or (rappel)
 

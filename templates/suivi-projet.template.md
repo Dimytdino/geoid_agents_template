@@ -5,13 +5,13 @@
      le projet et n'a pas à occuper le contexte de chaque session — les
      agents le lisent à la demande (clôture de session, reporting).
      Le CLAUDE.md ne garde que ce qui guide la décision au quotidien.
-     Généré le {{DATE}} via /cadrer-projet.
+     Généré le {{DATE}} via /geoid:cadrer-projet.
      ════════════════════════════════════════════════════════════════ -->
 
 # Suivi du projet — {{NOM_PROJET}}
 
 Tenu à jour par le `chef_projet` (ou l'orchestrateur s'il n'est pas
-activé), notamment via `/cloturer-session`. L'humain valide ce qui
+activé), notamment via `/geoid:cloturer-session`. L'humain valide ce qui
 entre ici (cf. CHARTE §4 et §5).
 
 ## 1. Roadmap / backlog
