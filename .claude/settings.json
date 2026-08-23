@@ -3,7 +3,6 @@
     "defaultMode": "default",
     "allow": [
       "Bash(ls:*)",
-      "Bash(cat:*)",
       "Bash(git status)",
       "Bash(git diff:*)",
       "Bash(git log:*)",
@@ -49,15 +48,5 @@
   },
   "enabledPlugins": {
     "geoid@geoid-socle": true
-  },
-  "sandbox": {
-    "enabled": false,
-    "failIfUnavailable": false,
-    "filesystem": {
-      "denyRead": ["~/.ssh", "~/.aws"]
-    },
-    "network": {
-      "allowedDomains": ["github.com", "*.github.com", "pypi.org", "files.pythonhosted.org"]
-    }
   }
 }
